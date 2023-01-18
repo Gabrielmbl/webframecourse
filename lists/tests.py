@@ -11,11 +11,15 @@ class HomePageTest(TestCase):
         self.assertEqual(found.func, home_page)
         
     def test_home_page_returns_correct_html(self):
-        request = HttpRequest() 
-        response = home_page(request)
-        html = response.content.decode('utf8')
-        self.assertTrue(html.startswith('<html>'))
-        self.assertIn('<title>To-Do lists</title>', html)
-        self.assertTrue(html.endswith('</html>'))
+        # request = HttpRequest() 
+        # response = home_page(request)
+        response = self.client.get('/') # When testing, ask Django to look at this page> Whatever comes from the slash and confirm that the thing that generates is really just home.html
+
+        # html = response.content.decode('utf8')
+        # self.assertTrue(html.startswith('<html>'))
+        # self.assertIn('<title>To-Do lists</title>', html)
+        # self.assertTrue(html.strip().endswith('</html>')) #Strip gets rid of white spaces on the left and right
+
+        self.assertTemplateUsed(response, 'home.html')
 
 # Create your tests here.
