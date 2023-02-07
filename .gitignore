@@ -4,3 +4,9 @@ virtualenv
 __pycache__
 *.pyc
 = Options() 
+db.sqlite3
+geckodriver.log
+virtualenv
+__pycache__
+*.pyc
+static
