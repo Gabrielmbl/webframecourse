@@ -1,4 +1,4 @@
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.firefox.options import Options
@@ -9,7 +9,8 @@ import unittest
 MAX_WAIT = 10
 
 
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(StaticLiveServerTestCase):
+
     def setUp(self):
         options = Options() 
         options.binary_location = r'C:\Program Files\Mozilla Firefox\firefox.exe'
@@ -150,4 +151,4 @@ class NewVisitorTest(LiveServerTestCase):
             delta = 10
         ) 
 
-        time.sleep(3)
+        time.sleep(3) 
