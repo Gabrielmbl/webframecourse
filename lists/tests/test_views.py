@@ -9,17 +9,9 @@ from lists.models import Item, List
 class HomePageTest(TestCase):
         
     def test_uses_home_template(self):
-        # request = HttpRequest() 
-        # response = home_page(request)
         response = self.client.get('/') # When testing, ask Django to look at this page> Whatever comes from the slash and confirm that the thing that generates is really just home.html
         self.assertTemplateUsed(response, 'home.html')
-        # html = response.content.decode('utf8')
-        # self.assertTrue(html.startswith('<html>'))
-        # self.assertIn('<title>To-Do lists</title>', html)
-        # self.assertTrue(html.strip().endswith('</html>')) #Strip gets rid of white spaces on the left and right
-
-        self.assertTemplateUsed(response, 'home.html')
-    
+   
  
     def test_only_saves_items_when_necessary(self):
         self.client.get('/')
@@ -95,35 +87,3 @@ class ListViewTest(TestCase):
         response = self.client.get(f'/lists/{correct_list.id}/')
         self.assertEqual(response.context['list'], correct_list)
 
-class ListAndItemModelsTest(TestCase):
-    
-    def test_saving_and_retrieving_items(self):
-
-        list_ = List()
-        list_.save()
-
-        #saving step
-        first_item = Item()
-        first_item.text = 'The first (ever) list item'
-        first_item.list = list_
-        first_item.save()
-
-        second_item = Item()
-        second_item.text = 'Item the second'
-        second_item.list = list_
-        second_item.save()
-
-        saved_list = List.objects.first()
-        self.assertEqual(saved_list, list_)
-        
-        #retrieving step
-        saved_items = Item.objects.all()
-        self.assertEqual(saved_items.count(), 2)
-
-        first_saved_item = saved_items[0]
-        second_saved_item = saved_items[1]
-        self.assertEqual(first_saved_item.text, 'The first (ever) list item')
-        self.assertEqual(first_saved_item.list, list_)
-        self.assertEqual(second_saved_item.text, 'Item the second')
-        self.assertEqual(second_saved_item.list, list_)
-# Create your tests here.
