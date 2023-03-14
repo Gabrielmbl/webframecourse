@@ -47,3 +47,7 @@ class ListAndItemModelsTest(TestCase):
         with self.assertRaises(ValidationError):
             item.save() #SQLite fails to tell us TextField is blank.
             item.full_clean() # Make sure if item is valid or not
+
+    def test_get_absolute_url(self):
+        list_ = List.objects.create()
+        self.assertEqual(list_.get_absolute_url(), f'/lists/{list_.id}/')
