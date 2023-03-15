@@ -6,6 +6,7 @@ from django.http import HttpRequest
 
 from lists.views import home_page
 from lists.models import Item, List
+from lists.forms import ItemForm
 
 class HomePageTest(TestCase):
         
@@ -13,7 +14,10 @@ class HomePageTest(TestCase):
         response = self.client.get('/') # When testing, ask Django to look at this page> Whatever comes from the slash and confirm that the thing that generates is really just home.html
         self.assertTemplateUsed(response, 'home.html')
    
- 
+    def test_home_page_uses_item_form(self):
+        response = self.client.get('/')
+        self.assertIsInstance(response.context['form'], ItemForm)
+
     def test_only_saves_items_when_necessary(self):
         self.client.get('/')
         self.assertEqual(Item.objects.count(), 0)
